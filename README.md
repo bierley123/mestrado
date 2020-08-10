@@ -2,6 +2,8 @@
 
 ***uh_jirau.ckt*** = Circuito usado de modelo
 
+***MatrixA.mtx*** = Matriz retirada do circuito usado do modelo uh_jirau.ckt
+
 ***Analisador sintático para um dialeto do SPICE em C++ (paper).docx*** = Modelo de parser para spice
 
 ***Documentação Parser.pdf*** = Documento de uso do parse
