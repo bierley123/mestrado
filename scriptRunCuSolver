@@ -1,0 +1,87 @@
+#!/bin/bash
+trap "exit" INT
+
+pathExe="/usr/local/cuda-10.2/samples/bin/x86_64/linux/release"
+pathBases=$PWD/asbases
+
+echo "QR"
+for entry in `ls $PWD/asbases`; do 
+
+	for counter in {1..20}; do 
+
+		$pathExe/./cuSolverSp_LinearSolver -R=qr -file=$pathBases/$entry > temp_$entry
+		
+		cat temp_$entry | grep -i "timing" | tr -s ' ' | cut -d ' ' -f 10 >> times_gpu_qr_$entry.txt
+
+		cat temp_$entry | grep -i "timing" | tr -s ' ' | cut -d ' ' -f 5  >> times_cpu_qr_$entry.txt
+
+#		$pathExe/./cuSolverSp_LinearSolver -R=qr -file=$pathBases/$entry | grep -i "timing" | tr -s ' ' | cut -d ' ' -f 5 >> times_cpu_qr_$entry.txt
+	
+	done
+		
+	echo $entry
+
+	echo "GPU : " 
+	awk '{ sum += $0 } END { print sum/NR }' times_gpu_qr_$entry.txt 
+
+	echo "CPU : " 
+	awk '{ sum += $0 } END { print sum/NR }' times_cpu_qr_$entry.txt
+done
+
+echo "\n"
+echo "LU"
+for entry in `ls $PWD/asbases`; do 
+
+	for counter in {1..20}; do
+
+		$pathExe/./cuSolverSp_LinearSolver -R=lu -file=$pathBases/$entry > temp_$entry
+
+		#$pathExe/./cuSolverSp_LinearSolver -R=lu -file=$pathBases/$entry | grep -i "timing" | tr -s ' ' | cut -d ' ' -f 10 >> times_gpu_lu_$entry.txt
+
+		cat temp_$entry | grep -i "timing" | tr -s ' ' | cut -d ' ' -f 10 >> times_gpu_lu_$entry.txt
+
+		cat temp_$entry | grep -i "timing" | tr -s ' ' | cut -d ' ' -f 5 >> times_cpu_lu_$entry.txt
+
+
+		#$pathExe/./cuSolverSp_LinearSolver -R=lu -file=$pathBases/$entry | grep -i "timing" | tr -s ' ' | cut -d ' ' -f 5 >> times_cpu_lu_$entry.txt
+
+
+	done
+
+	echo $entry
+
+	echo "GPU :" 
+	awk '{ sum += $0 } END {print sum/NR }' times_gpu_lu_$entry.txt
+
+	echo "CPU :" 
+	awk '{ sum += $0 } END {print sum/NR }' times_cpu_lu_$entry.txt
+done
+
+
+echo "\n"
+echo "CHOL"
+for entry in `ls $PWD/asbases`; do 
+
+	nameMatrix=`ls $PWD/asbases/$entry | grep *.mtx`
+
+	for counter in {1..20}; do
+
+		$pathExe/./cuSolverSp_LinearSolver -R=chol -file=$pathBases/$entry > temp_$entry
+
+
+		cat temp_$entry | grep -i "timing" | tr -s ' ' | cut -d ' ' -f 10 >> times_gpu_chol_$entry.txt
+		cat temp_$entry | grep -i "timing" | tr -s ' ' | cut -d ' ' -f 5  >> times_cpu_chol_$entry.txt
+
+#		/$pathExe/./cuSolverSp_LinearSolver -R=chol -file=$pathBases/$entry | grep -i "timing" | tr -s ' ' | cut -d ' ' -f 10 >> times_gpu_chol_$entry.txt
+
+#		/$pathExe/./cuSolverSp_LinearSolver -R=chol -file=$pathBases/$entry | grep -i "timing" | tr -s ' ' | cut -d ' ' -f 5 >> times_cpu_chol_$entry.txt
+	done
+
+	echo $entry
+	
+	echo "GPU :" 
+	awk '{ sum += $0 } END {sum/NR }' times_gpu_chol_$entry.txt
+
+	echo "CPU :" 
+	awk '{ sum += $0 } END {sum/NR }' times_cpu_chol_$entry.txt
+done
