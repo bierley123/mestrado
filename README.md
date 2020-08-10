@@ -15,3 +15,6 @@ MNA.exe = O programa quando pronto ira gerar as matrizes A,x e z do sistema line
 ReadMe.txt = O programa quando pronto ira gerar as matrizes A,x e z do sistema linear Ax=z a partir de uma netlist. 
 
 netlist.ckt = NetList usada pelo programa MNA.exe
+
+cuSolverDn_LinearSolver.cpp = Solucao em CUDA para sistema linear
+
