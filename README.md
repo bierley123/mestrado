@@ -1,3 +1,2 @@
 # mestrado
-Programa de mestrado
-mestrado
+uh_jirau.ckt = Circuito usado de modelo.
