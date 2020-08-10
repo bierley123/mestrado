@@ -8,3 +8,4 @@ Documentação Parser.pdf = Documento de uso do parse.
 
 MESTRADO.docx = Dissertação
 
+Circuito.cpp, Circuito.h, main.cpp, parser.cpp, parser.h = Arquivos usados no parser
