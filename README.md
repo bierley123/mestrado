@@ -18,3 +18,9 @@ netlist.ckt = NetList usada pelo programa MNA.exe
 
 cuSolverDn_LinearSolver.cpp = Solucao em CUDA para sistema linear
 
+scriptRunCuSolver = Modelo rodar cuSolver
+
+
+
+
+
